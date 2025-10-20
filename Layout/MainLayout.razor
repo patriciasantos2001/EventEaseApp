@@ -1,0 +1,44 @@
+﻿@inherits LayoutComponentBase
+@inject UserSessionService SessionService
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            @if (SessionService.IsLoggedIn)
+            {
+                <span>👋 Hello, @SessionService.CurrentUser!.Username</span>
+                <button @onclick="Logout">Logout</button>
+            }
+            else
+            {
+                <a href="/login">Login</a>
+            }
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        SessionService.OnSessionChanged += StateHasChanged;
+    }
+
+    private async Task Logout()
+    {
+        await SessionService.LogoutAsync();
+    }
+
+    public void Dispose()
+    {
+        SessionService.OnSessionChanged -= StateHasChanged;
+    }
+}
+

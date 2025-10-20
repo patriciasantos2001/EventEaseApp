@@ -1,0 +1,62 @@
+.form-title[b-ir8cm6id51] {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
+}
+
+.form-container[b-ir8cm6id51] {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 25px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-group[b-ir8cm6id51] {
+    margin-bottom: 15px;
+}
+
+.form-control[b-ir8cm6id51] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.validation-message[b-ir8cm6id51] {
+    color: #d9534f;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.submit-button[b-ir8cm6id51] {
+    background-color: #0078d4;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit-button:hover[b-ir8cm6id51] {
+    background-color: #005a9e;
+}
+
+.success-message[b-ir8cm6id51] {
+    margin-top: 20px;
+    color: #28a745;
+    font-weight: bold;
+}
+
+.warning-message[b-ir8cm6id51] {
+    color: #d9534f;
+    font-weight: bold;
+}

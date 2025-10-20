@@ -1,0 +1,63 @@
+@page "/register"
+@inject EventStorageService EventStorage
+@inject UserSessionService SessionService
+@inject NavigationManager NavigationManager
+
+<h2 class="form-title">Register Event</h2>
+
+@if (!SessionService.IsLoggedIn)
+{
+    <p class="warning-message">⚠️ You must log in before registering an event.</p>
+}
+else
+{
+    <EditForm Model="@eventModel" OnValidSubmit="@HandleValidSubmit" class="form-container">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label>Event Name:</label>
+            <InputText @bind-Value="eventModel.Name" class="form-control" />
+            <ValidationMessage For="@(() => eventModel.Name)" />
+        </div>
+
+        <div class="form-group">
+            <label>Date:</label>
+            <InputDate @bind-Value="eventModel.Date" class="form-control" />
+            <ValidationMessage For="@(() => eventModel.Date)" />
+        </div>
+
+        <div class="form-group">
+            <label>Location:</label>
+            <InputText @bind-Value="eventModel.Location" class="form-control" />
+            <ValidationMessage For="@(() => eventModel.Location)" />
+        </div>
+
+        <button type="submit" class="submit-button">Register Event</button>
+    </EditForm>
+}
+@if (submitted)
+{
+    <p class="success-message">✅ Event registered successfully!</p>
+}
+
+<button @onclick="@(() => NavigationManager.NavigateTo("/events"))">All events</button>
+
+
+@code {
+    private Event eventModel = new();
+    private bool submitted = false;
+
+
+    private async Task HandleValidSubmit()
+    {
+        if (!SessionService.IsLoggedIn)
+            return;
+
+        var username = SessionService.CurrentUser!.Username;
+        await EventStorage.SaveEventAsync(username, eventModel);
+
+        submitted = true;
+        eventModel = new(); // reset form
+    }
+}

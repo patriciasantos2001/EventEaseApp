@@ -1,0 +1,82 @@
+@page "/attendance"
+@inject EventStorageService EventStorage
+@inject AttendanceService AttendanceService
+
+<h3>Event Attendance</h3>
+
+@if (eventAttendances != null && eventAttendances.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Event Name</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Created By</th>
+                <th>Attendance</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ea in eventAttendances)
+            {
+                <tr>
+                    <td>@ea.Event.Name</td>
+                    <td>@ea.Event.Date.ToShortDateString()</td>
+                    <td>@ea.Event.Location</td>
+                    <td>@ea.Event.CreatedBy</td>
+                    <td>@ea.AttendanceCount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No events found.</p>
+}
+
+@code {
+    private List<EventAttendance> eventAttendances = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var allEvents = await EventStorage.GetAllEventsAsync();
+        eventAttendances = new List<EventAttendance>();
+
+        foreach (var ev in allEvents)
+        {
+            var attendees = await AttendanceService.GetEventAttendancesAsync(ev.Id);
+            eventAttendances.Add(new EventAttendance
+            {
+                Event = ev,
+                AttendanceCount = attendees.Count
+            });
+        }
+    }
+
+    private class EventAttendance
+    {
+        public Event Event { get; set; } = new Event();
+        public int AttendanceCount { get; set; }
+    }
+}
+
+
+<style>
+table.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table.table th, table.table td {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+}
+
+table.table th {
+    background-color: #f0f0f0;
+    text-align: left;
+}
+
+</style>

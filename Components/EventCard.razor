@@ -1,0 +1,87 @@
+@inject NavigationManager NavigationManager
+@inject  AttendanceService AttendanceService 
+@inject UserSessionService SessionService
+
+@if (IsValidEvent(Event))
+{
+    <div class="card event-card m-2 p-3 shadow-sm" @onclick="NavigateToDetails" style="cursor: pointer;">
+        <h4 class="event-title">@Event.Name</h4>
+        <p><strong>Date:</strong> @Event.Date.ToShortDateString()</p>
+        <p><strong>Location:</strong> @Event.Location</p>
+        <p><strong>Created By:</strong> @Event.CreatedBy</p>
+
+        @if (!IsAttending)
+        {
+            <button class="btn btn-primary" @onclick="MarkAttendance">Attend</button>
+        }
+        else
+        {
+            <span class="text-success">✅ You are attending</span>
+        }
+    </div>
+}
+else
+{
+    <div class="card m-2 p-3 border-danger text-danger">
+        <p>Invalid event data.</p>
+    </div>
+}
+
+
+
+@code {
+    [Parameter]
+    public Event Event { get; set; } = new();
+
+    private bool IsAttending { get; set; }
+
+    private void NavigateToDetails()
+    {
+        if (Event?.Id > 0)
+        {
+            NavigationManager.NavigateTo($"/eventdetails/{Event.Id}");
+        }
+    }
+
+    private bool IsValidEvent(Event ev) =>
+        ev != null &&
+        ev.Id > 0 &&
+        !string.IsNullOrWhiteSpace(ev.Name) &&
+        ev.Date != default &&
+        !string.IsNullOrWhiteSpace(ev.Location);
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (SessionService.IsLoggedIn)
+        {
+            IsAttending = await AttendanceService.IsUserAttendingAsync(Event.Id, SessionService.CurrentUser!.Username);
+        }
+    }
+
+    private async Task MarkAttendance()
+    {
+        if (!SessionService.IsLoggedIn) return;
+
+        await AttendanceService.RegisterAttendanceAsync(Event.Id, SessionService.CurrentUser!.Username);
+        IsAttending = true;
+    }
+}
+
+<style>
+.event-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    background-color: #fafafa;
+}
+
+.event-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+}
+
+.event-title {
+    color: #0078d4;
+    margin-bottom: 8px;
+}
+</style>

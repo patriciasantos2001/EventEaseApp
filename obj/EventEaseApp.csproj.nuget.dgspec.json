@@ -1,0 +1,114 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\PatríciaSantos\\Desktop\\COURSERA\\EventEaseApp\\EventEaseApp.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\PatríciaSantos\\Desktop\\COURSERA\\EventEaseApp\\EventEaseApp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\PatríciaSantos\\Desktop\\COURSERA\\EventEaseApp\\EventEaseApp.csproj",
+        "projectName": "EventEaseApp",
+        "projectPath": "C:\\Users\\PatríciaSantos\\Desktop\\COURSERA\\EventEaseApp\\EventEaseApp.csproj",
+        "packagesPath": "C:\\Users\\PatríciaSantos\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PatríciaSantos\\Desktop\\COURSERA\\EventEaseApp\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\PatríciaSantos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "C:\\ETN_AZR\\Bibliotecas\\Telerik\\2025\\": {},
+          "C:\\ETN_AZR\\Bibliotecas\\Telerik\\UI_For_ASP.NET\\AJAX\\2025_1_416": {},
+          "C:\\ETN_AZR\\Bibliotecas\\Telerik\\UI_For_Blazor\\": {},
+          "C:\\ETN_AZR\\Bibliotecas\\Telerik\\UI_For_WinForms\\2023_1_314_Nuget_Dev": {},
+          "C:\\ETN_AZR\\Bibliotecas\\Telerik\\UI_For_WinForms\\2024_3_924\\Nuget\\": {},
+          "C:\\ETN_AZR\\Bibliotecas\\Telerik\\UI_for_ASP.NET_AJAX": {},
+          "C:\\ETN_AZR\\Bibliotecas\\Telerik\\UI_for_WPF\\2023_1_315_NuGet_NoXaml_Dev": {},
+          "C:\\ETN_AZR\\Bibliotecas\\Telerik\\UI_for_WPF\\2023_3_1114_NuGet_NoXaml_Dev\\": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Blazored.LocalStorage": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
+            "Microsoft.AspNetCore.Components.WebAssembly": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "Microsoft.AspNetCore.Components.WebAssembly.DevServer": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
+            "Microsoft.NET.ILLink.Tasks": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.9, )",
+              "autoReferenced": true
+            },
+            "Microsoft.NET.Sdk.WebAssembly.Pack": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.9, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "browser-wasm": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

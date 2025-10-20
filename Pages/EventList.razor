@@ -1,0 +1,104 @@
+@page "/events"
+@inject EventStorageService EventStorage
+@inject NavigationManager NavigationManager
+
+<h3>Events</h3>
+<button @onclick="@(() => NavigationManager.NavigateTo("/register"))">Register new event</button>
+
+<!-- Search bar -->
+<div class="search-bar mb-3">
+    <input type="text" placeholder="Search events..." @bind="searchTerm" class="form-control" />
+</div>
+
+<!-- User tags -->
+<div class="user-tags mb-2">
+    <button class="tag @(selectedUser == null ? "active" : "")" @onclick="() => SelectUser(null)">
+        All
+    </button>
+    @foreach (var user in uniqueUsers)
+    {
+        <button class="tag @(selectedUser == user ? "active" : "")" @onclick="() => SelectUser(user)">
+            @user
+        </button>
+    }
+</div>
+
+<!-- Event list -->
+@if (FilteredEvents.Any())
+{
+    <Virtualize TItem="Event" Items="@FilteredEvents.ToList()" ItemSize="100">
+        <ItemContent Context="eventItem">
+            <EventCard @key="eventItem.CreatedBy + '_' + eventItem.Id" Event="eventItem" />
+        </ItemContent>
+    </Virtualize>
+}
+else
+{
+    <p>No events found.</p>
+}
+
+@code {
+    private List<Event> savedEvents = [];
+    private List<string> uniqueUsers = [];
+    private string? selectedUser = null;
+    private string searchTerm = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        savedEvents = await EventStorage.GetAllEventsAsync();
+        uniqueUsers = savedEvents
+            .Select(e => e.CreatedBy)
+            .Distinct()
+            .OrderBy(u => u)
+            .ToList();
+    }
+
+    private void SelectUser(string? user)
+    {
+        selectedUser = user;
+    }
+
+    private IEnumerable<Event> FilteredEvents =>
+        savedEvents
+            .Where(e => string.IsNullOrWhiteSpace(searchTerm)
+                        || e.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                        || e.Location.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                        || e.CreatedBy.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                        || e.Date.ToShortDateString().Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+            .Where(e => selectedUser == null || e.CreatedBy == selectedUser);
+}
+
+<style>
+.search-bar input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.user-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tag {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.tag:hover {
+    background-color: #e0e0e0;
+}
+
+.tag.active {
+    background-color: #0078d4;
+    color: white;
+}
+</style>

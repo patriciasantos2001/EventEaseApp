@@ -1,0 +1,38 @@
+@page "/login"
+@inject UserSessionService SessionService
+@inject NavigationManager Nav
+
+<h3>Login</h3>
+
+@if (!SessionService.IsLoggedIn)
+{
+    <EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
+        <InputText @bind-Value="loginModel.Username" placeholder="Enter your name" />
+        <button type="submit">Login</button>
+    </EditForm>
+}
+else
+{
+    <p>Welcome back, @SessionService.CurrentUser!.Username!</p>
+    <button @onclick="Logout">Logout</button>
+}
+
+@code {
+    private LoginModel loginModel = new();
+
+    private async Task HandleLogin()
+    {
+        await SessionService.LoginAsync(loginModel.Username);
+        Nav.NavigateTo("/events");
+    }
+
+    private async Task Logout()
+    {
+        await SessionService.LogoutAsync();
+    }
+
+    public class LoginModel
+    {
+        public string Username { get; set; } = string.Empty;
+    }
+}

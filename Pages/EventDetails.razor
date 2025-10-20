@@ -1,0 +1,34 @@
+@page "/eventdetails/{EventId:int}"
+
+<h3>Event Details</h3>
+
+@if (eventDetails != null)
+{
+    <p><strong>Name:</strong> @eventDetails.Name</p>
+    <p><strong>Date:</strong> @eventDetails.Date.ToShortDateString()</p>
+    <p><strong>Location:</strong> @eventDetails.Location</p>
+}
+else
+{
+    <div class="alert alert-warning">
+        <a><strong>Event not found.</strong> Please check the URL or return to the /event list</a>.
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int EventId { get; set; }
+
+    private Event? eventDetails;
+
+    protected override void OnInitialized()
+    {
+        var allEvents = new List<Event>
+        {
+            new Event { Id = 1, Name = "Tech Conference 2025", Date = new DateTime(2025, 11, 10), Location = "Lisbon" },
+            new Event { Id = 2, Name = "Marketing Summit", Date = new DateTime(2025, 12, 5), Location = "Porto" }
+        };
+
+        eventDetails = allEvents.FirstOrDefault(e => e.Id == EventId);
+    }
+}
